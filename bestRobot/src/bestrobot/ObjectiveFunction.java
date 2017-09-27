@@ -28,8 +28,10 @@ public class ObjectiveFunction {
     float leftWheel, rightWheel;
     static final float THRESHOLD = 0.15f;
     static final float DT = 0.1f;
-    float[] leftSensorVector,rightSensorVector = new float[4];
-    float[] leftSensorPosition,rightSensorPosition = new float[4];
+    float[] leftSensorVector = new float[4];
+    float[] rightSensorVector = new float[4];
+    float[] leftSensorPosition = new float[4];
+    float[] rightSensorPosition = new float[4];
     float[][] model = new float[4][4];
     
     public ObjectiveFunction(float wheelSpeed, float wheelSeparation, float wheelRadius, float distanceToWheels, float robotHigh, float robotWidth,float sensorDistance, float sensorSeparation, String path) throws FileNotFoundException, IOException{
@@ -47,9 +49,13 @@ public class ObjectiveFunction {
         setCircuite(path);
         this.x = this.circuite.get(0).get(0);
         this.z = this.circuite.get(0).get(2);
-        rot = 0.0f;
+        this.rot = 0.0f;
         setSensors();
-        
+        float[] c = new float[3];
+        c[0] = 3;
+        c[1] = 4;
+        c[2] = 5;
+        translate(null, c);
     }
     
     private void setCircuite(String path) throws FileNotFoundException, IOException{
@@ -94,6 +100,20 @@ public class ObjectiveFunction {
         z -= (rightWheel + leftWheel) * ((wheelRadius * Math.cos(Math.toRadians(rot)))/2) * DT;
         rot += (rightWheel - leftWheel) * (wheelRadius/wheelSeparation) * DT;
         
+        float[] vectorTranslate = new float[3];
+        vectorTranslate[0] = x;
+        vectorTranslate[1] = 0.0f;
+        vectorTranslate[2] = z;
+        this.model = translate(indentityMatrix4x4(),vectorTranslate);
+        this.model = rotateY(model,rot);
+        
+        this.leftSensorPosition = mulMatrix(model, leftSensorVector);
+        this.rightSensorPosition = mulMatrix(model,rightSensorVector);
+        
+        leftWheel = wheelSpeed;
+        rightWheel = wheelSpeed;
+        
+        //añadir bucle y condicion de parada
         return 0;
         
     }
@@ -117,6 +137,82 @@ public class ObjectiveFunction {
                 break;
             }
         }
+    }
+    
+    //matriz por matriz
+    private float[][] mulMatrix(float[][] m1, float[][] m2){
+        
+        if(m1[0].length != m2.length)
+            throw new RuntimeException("Cannot multiply this matrix");
+        
+        float[][] ret = new float[m1.length][m2[0].length];
+        
+        for (int i = 0; i < ret.length; i++) {
+            for (int j = 0; j < ret[i].length; j++) {
+                
+                for (int k = 0; k < m1[0].length; k++) {
+                    ret[i][j] += m1[i][k]*m2[k][j];
+                }
+                
+            }
+        }
+        return ret;
+    }
+    
+    //matriz por vector
+    private float[] mulMatrix(float[][] m1, float[] m2){
+        
+        if(m1[0].length != m2.length)
+            throw new RuntimeException("Cannot multiply this matrix");
+        
+        float[] ret = new float[m1.length];
+        
+        for (int i = 0; i < ret.length; i++) {                
+            for (int k = 0; k < m1[0].length; k++) {
+                ret[i] += m1[i][k]*m2[k];
+            }
+        }
+        return ret;
+    }
+    
+    private float[][] indentityMatrix4x4(){
+        
+        float[][] ret = new float[4][4];
+        for (int i = 0; i < ret.length; i++) {
+            for (int j = 0; j < ret[i].length; j++) {
+                if(i==j){
+                    ret[i][j] = 1;
+                }else{
+                    ret[i][j]=0;
+                }
+            }
+        }
+        
+        return ret;
+        
+    }
+    
+    private float[][] translate(float[][] matrix, float[] vector){
+        
+        float[][] matrixTranslate = indentityMatrix4x4();
+        matrixTranslate[0][3] = vector[0];
+        matrixTranslate[1][3] = vector[1];
+        matrixTranslate[2][3] = vector[2];
+        
+        return mulMatrix(matrix, matrixTranslate);
+        
+    }
+    
+    private float[][] rotateY(float[][] matrix,float grades){
+        
+        float[][] matrixRotate = indentityMatrix4x4();
+        matrixRotate[0][0] = (float) Math.cos(Math.toRadians(grades));
+        matrixRotate[0][2] = (float) Math.sin(Math.toRadians(grades));
+        matrixRotate[2][0] = (float) -Math.sin(Math.toRadians(grades));
+        matrixRotate[2][2] = (float) Math.cos(Math.toRadians(grades));
+        
+        return mulMatrix(matrix, matrixRotate);
+        
     }
     
 }
