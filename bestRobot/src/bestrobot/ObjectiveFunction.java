@@ -18,24 +18,28 @@ import java.util.List;
  */
 public class ObjectiveFunction {
     
-    float wheelSpeed, wheelSeparation, wheelRadius;
-    float distanceToWheels;
-    float robotHigh, robotWidth;
-    float sensorDistance, sensorSeparation;
-    List<List<Float>> circuite;
+    private float wheelSpeed, wheelSeparation, wheelRadius;
+    private float distanceToWheels;
+    private float robotHigh, robotWidth;
+    private float sensorDistance, sensorSeparation;
+    private List<List<Float>> circuite;
     
-    float x,z,rot;
-    float leftWheel, rightWheel;
-    static final float THRESHOLD = 0.15f;
-    static final float DT = 0.1f;
-    float[] leftSensorVector = new float[4];
-    float[] rightSensorVector = new float[4];
-    float[] leftSensorPosition = new float[4];
-    float[] rightSensorPosition = new float[4];
-    float[][] model = new float[4][4];
+    private float x,z,rot;
+    private float leftWheel, rightWheel;
+    private final float THRESHOLD = 0.15f;
+    private final float DT = 0.007f;
+    private final float THRESHOLD_STOP_CONDITION = 2f;
+    private float[] leftSensorVector = new float[4];
+    private float[] rightSensorVector = new float[4];
+    private float[] leftSensorPosition = new float[4];
+    private float[] rightSensorPosition = new float[4];
+    private float[][] model = new float[4][4];
+    
+    private float time;
     
     public ObjectiveFunction(float wheelSpeed, float wheelSeparation, float wheelRadius, float distanceToWheels, float robotHigh, float robotWidth,float sensorDistance, float sensorSeparation, String path) throws FileNotFoundException, IOException{
     
+        this.time = 0;
         this.wheelSpeed = wheelSpeed;
         this.leftWheel = wheelSpeed;
         this.rightWheel = wheelSpeed;
@@ -51,11 +55,6 @@ public class ObjectiveFunction {
         this.z = this.circuite.get(0).get(2);
         this.rot = 0.0f;
         setSensors();
-        float[] c = new float[3];
-        c[0] = 3;
-        c[1] = 4;
-        c[2] = 5;
-        translate(null, c);
     }
     
     private void setCircuite(String path) throws FileNotFoundException, IOException{
@@ -94,27 +93,31 @@ public class ObjectiveFunction {
     }
     
     public float race(){
+        while(Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
+            movementController();
+            x -= (rightWheel + leftWheel) * ((wheelRadius * Math.sin(rot))/2) * DT;
+            z -= (rightWheel + leftWheel) * ((wheelRadius * Math.cos(rot))/2) * DT;
+            rot += (rightWheel - leftWheel) * (wheelRadius/wheelSeparation) * DT;
+
+            float[] vectorTranslate = new float[3];
+            vectorTranslate[0] = x;
+            vectorTranslate[1] = 0.0f;
+            vectorTranslate[2] = z;
+            this.model = translate(indentityMatrix4x4(),vectorTranslate);
+            this.model = rotateY(model,rot);
+
+            this.leftSensorPosition = mulMatrix(model, leftSensorVector);
+            this.rightSensorPosition = mulMatrix(model,rightSensorVector);
+
+            leftWheel = wheelSpeed;
+            rightWheel = wheelSpeed;
+            
+            this.time += DT;
+            System.out.println("x = "+this.x);
+            System.out.println("z = "+this.z);
+        }
         
-        movementController();
-        x -= (rightWheel + leftWheel) * ((wheelRadius * Math.sin(Math.toRadians(rot)))/2) * DT;
-        z -= (rightWheel + leftWheel) * ((wheelRadius * Math.cos(Math.toRadians(rot)))/2) * DT;
-        rot += (rightWheel - leftWheel) * (wheelRadius/wheelSeparation) * DT;
-        
-        float[] vectorTranslate = new float[3];
-        vectorTranslate[0] = x;
-        vectorTranslate[1] = 0.0f;
-        vectorTranslate[2] = z;
-        this.model = translate(indentityMatrix4x4(),vectorTranslate);
-        this.model = rotateY(model,rot);
-        
-        this.leftSensorPosition = mulMatrix(model, leftSensorVector);
-        this.rightSensorPosition = mulMatrix(model,rightSensorVector);
-        
-        leftWheel = wheelSpeed;
-        rightWheel = wheelSpeed;
-        
-        //añadir bucle y condicion de parada
-        return 0;
+        return this.time;
         
     }
     
@@ -141,7 +144,6 @@ public class ObjectiveFunction {
     
     //matriz por matriz
     private float[][] mulMatrix(float[][] m1, float[][] m2){
-        
         if(m1[0].length != m2.length)
             throw new RuntimeException("Cannot multiply this matrix");
         
@@ -160,8 +162,7 @@ public class ObjectiveFunction {
     }
     
     //matriz por vector
-    private float[] mulMatrix(float[][] m1, float[] m2){
-        
+    private float[] mulMatrix(float[][] m1, float[] m2){       
         if(m1[0].length != m2.length)
             throw new RuntimeException("Cannot multiply this matrix");
         
@@ -206,10 +207,10 @@ public class ObjectiveFunction {
     private float[][] rotateY(float[][] matrix,float grades){
         
         float[][] matrixRotate = indentityMatrix4x4();
-        matrixRotate[0][0] = (float) Math.cos(Math.toRadians(grades));
-        matrixRotate[0][2] = (float) Math.sin(Math.toRadians(grades));
-        matrixRotate[2][0] = (float) -Math.sin(Math.toRadians(grades));
-        matrixRotate[2][2] = (float) Math.cos(Math.toRadians(grades));
+        matrixRotate[0][0] = (float) Math.cos(grades);
+        matrixRotate[0][2] = (float) Math.sin(grades);
+        matrixRotate[2][0] = (float) -Math.sin(grades);
+        matrixRotate[2][2] = (float) Math.cos(grades);
         
         return mulMatrix(matrix, matrixRotate);
         

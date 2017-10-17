@@ -17,7 +17,9 @@ public class BestRobot {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        ObjectiveFunction of = new ObjectiveFunction(1, 1, 1, 1, 1, 1, 1, 1,"F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito2.txt");
+        //Wheel Speed -- Wheel Separation -- Wheel Radius -- Distance to Wheels -- Robot High -- Robot Width -- Sensor Distance -- Sensor Separation -- Circuite path
+        //ObjectiveFunction of = new ObjectiveFunction(2*2*(float)Math.PI, 16, 2, 3, 22, 16, 0, 4,"F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
+        //System.out.println(of.race());
     }
     
 }
