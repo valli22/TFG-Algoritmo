@@ -18,9 +18,8 @@ import java.util.List;
  */
 public class ObjectiveFunction {
     
-    private float wheelSpeed, wheelSeparation, wheelRadius;
+    private float wheelSpeed;
     private float distanceToWheels;
-    private float robotHigh, robotWidth;
     private float sensorDistance, sensorSeparation;
     private List<List<Float>> circuite;
     
@@ -36,25 +35,20 @@ public class ObjectiveFunction {
     private float[][] model = new float[4][4];
     
     private float time;
+    private final float TIME_TO_STOP = 70;
     
-    public ObjectiveFunction(float wheelSpeed, float wheelSeparation, float wheelRadius, float distanceToWheels, float robotHigh, float robotWidth,float sensorDistance, float sensorSeparation, String path) throws FileNotFoundException, IOException{
+    public ObjectiveFunction(float wheelSpeed, String path) throws FileNotFoundException, IOException{
     
-        this.time = 0;
+        
         this.wheelSpeed = wheelSpeed;
         this.leftWheel = wheelSpeed;
         this.rightWheel = wheelSpeed;
-        this.wheelSeparation = wheelSeparation;
-        this.wheelRadius = wheelRadius;
-        this.distanceToWheels = distanceToWheels;
-        this.robotHigh = robotHigh;
-        this.robotWidth = robotWidth;
-        this.sensorDistance = sensorDistance;
-        this.sensorSeparation = sensorSeparation;
+        
         setCircuite(path);
         this.x = this.circuite.get(0).get(0);
         this.z = this.circuite.get(0).get(2);
         this.rot = 0.0f;
-        setSensors();
+        
     }
     
     private void setCircuite(String path) throws FileNotFoundException, IOException{
@@ -92,7 +86,14 @@ public class ObjectiveFunction {
         
     }
     
-    public float race(){
+    public float race(float wheelSeparation, float wheelRadius, float distanceToWheels,float sensorDistance, float sensorSeparation){
+        
+        this.time = 0;
+        this.distanceToWheels = distanceToWheels;
+        this.sensorDistance = sensorDistance;
+        this.sensorSeparation = sensorSeparation;
+        setSensors();
+        
         while(Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
             movementController();
             x -= (rightWheel + leftWheel) * ((wheelRadius * Math.sin(rot))/2) * DT;
@@ -113,8 +114,8 @@ public class ObjectiveFunction {
             rightWheel = wheelSpeed;
             
             this.time += DT;
-            System.out.println("x = "+this.x);
-            System.out.println("z = "+this.z);
+            if(this.time >= TIME_TO_STOP)
+                break;
         }
         
         return this.time;

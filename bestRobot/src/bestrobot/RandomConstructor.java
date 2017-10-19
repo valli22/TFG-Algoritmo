@@ -14,36 +14,29 @@ import java.util.List;
  * @author David
  */
 public class RandomConstructor {
-    private float minWheelSeparation;
-    private float maxWheelSeparation;
-    private float minWheelRadius;
-    private float maxWheelRadius;
-    private float minDistanceToWheels;
-    private float maxDistanceToWheels;
-    private float minRobotHigh;
-    private float maxRobotHigh;
-    private float minRobotWidth;
-    private float maxRobotWidth;
-    private float minSensorDistance;
-    private float maxSensorDistance;
-    private float minSensorSeparation;
-    private float maxSensorSeparation;
+    private final float MIN_WHEEL_SEPARATION = 1;
+    private final float MAX_WHEEL_SEPARATION = 40;
+    private final float MIN_WHEEL_RADIUS = 0.1f;
+    private final float MAX_WHEEL_RADIUS = 2;
+    private final float MIN_DISTANCE_TO_WHEELS = 0;
+    private final float MAX_DISTANCE_TO_WHEELS = 40;
+    private final float MIN_SENSOR_DISTANCE = 1;
+    private final float MAX_SENSOR_DISTANCE = 5;
+    private final float MIN_SENSOR_SEPARATION = 0;
+    private final float MAX_SENSOR_SEPARATION = 44;
     
-    public RandomConstructor(){
-        
+    public RandomConstructor(){   
     }
     
-    public List<Float> produceNumbers(){
+    public Robot produceNumbers(){
         
         List<Float> ret = new ArrayList<>();
-        ret.add((float) (Math.random()*(maxWheelSeparation-minWheelSeparation)+minWheelSeparation));
-        ret.add((float) (Math.random()*(maxWheelRadius-minWheelRadius)+minWheelRadius));
-        ret.add((float) (Math.random()*(maxDistanceToWheels-minDistanceToWheels)+minDistanceToWheels));
-        ret.add((float) (Math.random()*(maxRobotHigh-minRobotHigh)+minRobotHigh));
-        ret.add((float) (Math.random()*(maxRobotWidth-minRobotWidth)+minRobotWidth));
-        ret.add((float) (Math.random()*(maxSensorDistance-minSensorDistance)+minSensorDistance));
-        ret.add((float) (Math.random()*(maxSensorSeparation-minSensorSeparation)+minSensorSeparation));
-        return ret;
+        ret.add((float) (Math.random()*(MAX_WHEEL_SEPARATION-MIN_WHEEL_SEPARATION)+MIN_WHEEL_SEPARATION));
+        ret.add((float) (Math.random()*(MAX_WHEEL_RADIUS-MIN_WHEEL_RADIUS)+MIN_WHEEL_RADIUS));
+        ret.add((float) (Math.random()*(MAX_DISTANCE_TO_WHEELS-MIN_DISTANCE_TO_WHEELS)+MIN_DISTANCE_TO_WHEELS));
+        ret.add((float) (Math.random()*(MAX_SENSOR_DISTANCE-MIN_SENSOR_DISTANCE)+MIN_SENSOR_DISTANCE));
+        ret.add((float) (Math.random()*(MAX_SENSOR_SEPARATION-MIN_SENSOR_SEPARATION)+MIN_SENSOR_SEPARATION));
+        return new Robot(ret);
     
     }
 }
