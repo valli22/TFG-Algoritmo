@@ -6,6 +6,7 @@
 package bestrobot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,19 @@ public class BestRobot {
         
         Robot newRobot = new InitializeRobot().firstRobot();
         Robot bestRobotATM = null;
+        
+        //prueba con robot de parametros conocidos
+        List<Float> param = new ArrayList<>();
+        param.add(16f);
+        param.add(2f);
+        param.add(3f);
+        param.add(0f);
+        param.add(4f);
+        newRobot = new Robot(param);
+        ObjectiveFunction obj = new ObjectiveFunction(2*2*(float)Math.PI, "F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
+        newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3), newRobot.getParameters().get(4)));
+        //fin de prueba con robot de parametros conocidos
+        
         System.out.println(newRobot.getTime());
         int round = 0;
         while(!newRobot.equals(bestRobotATM)){
