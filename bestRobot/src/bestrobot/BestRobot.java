@@ -44,6 +44,5 @@ public class BestRobot {
             System.out.println(round+" = "+newRobot.getTime());
             round++;
         }
-    }
-    
+    }   
 }

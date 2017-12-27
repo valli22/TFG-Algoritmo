@@ -47,9 +47,6 @@ public class ObjectiveFunction {
         this.rightWheel = wheelSpeed;
         
         setCircuite(path);
-        this.x = this.circuite.get(0).get(0);
-        this.z = this.circuite.get(0).get(2);
-        this.rot = 0.0f;
         
     }
     
@@ -95,6 +92,7 @@ public class ObjectiveFunction {
         this.sensorDistance = sensorDistance;
         this.sensorSeparation = sensorSeparation;
         setSensors();
+        resetParameters();
         
         while(Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
         //while(Math.sqrt(Math.pow(circuite.get(50).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(50).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(50).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(50).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
@@ -124,6 +122,12 @@ public class ObjectiveFunction {
         
         return this.time;
         
+    }
+    
+    private void resetParameters(){
+        this.x = this.circuite.get(0).get(0);
+        this.z = this.circuite.get(0).get(2);
+        this.rot = 0.0f;
     }
     
     private void movementController(){

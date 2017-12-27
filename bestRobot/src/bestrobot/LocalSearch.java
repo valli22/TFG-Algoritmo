@@ -53,9 +53,8 @@ public class LocalSearch {
             }else{
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
             }
-
-        neighbors.add(new Robot(newNeighbourParameters));
         }
+        neighbors.add(new Robot(newNeighbourParameters));
         /*
         for (int i = 0; i < inicialSolution.getParameters().size(); i++) {
             List<Float> newNeighbourParameters = new ArrayList<>();
@@ -122,6 +121,7 @@ public class LocalSearch {
         }
         if(this.initialSolution.getTime()<this.neighbors.get(best).getTime())
             best = -1;
+        
         return best;
     }
 }
