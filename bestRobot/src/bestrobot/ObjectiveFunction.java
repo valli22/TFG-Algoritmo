@@ -19,8 +19,8 @@ import java.util.List;
 public class ObjectiveFunction {
     
     private float wheelSpeed;
-    private float distanceToWheels;
-    private float sensorDistance, sensorSeparation;
+    private float sensorSeparation;
+    private float distanceToAxis;
     private List<List<Float>> circuite;
     
     private float x,z,rot;
@@ -74,22 +74,21 @@ public class ObjectiveFunction {
         
         this.leftSensorVector[0] = -this.sensorSeparation/2f;
         this.leftSensorVector[1] = 0f;
-        this.leftSensorVector[2] = -(this.sensorDistance+this.distanceToWheels);
+        this.leftSensorVector[2] = -(this.distanceToAxis);
         this.leftSensorVector[3] = 1;
         this.leftSensorPosition = this.leftSensorVector;
         this.rightSensorVector[0] = this.sensorSeparation/2f;
         this.rightSensorVector[1] = 0f;
-        this.rightSensorVector[2] = -(this.sensorDistance+this.distanceToWheels);
+        this.rightSensorVector[2] = -(this.distanceToAxis);
         this.rightSensorVector[3] = 1;
         this.rightSensorPosition = this.rightSensorVector;
         
     }
     
-    public float race(float wheelSeparation, float wheelRadius, float distanceToWheels,float sensorDistance, float sensorSeparation){
+    public float race(float wheelSeparation, float wheelRadius, float distanceToAxis, float sensorSeparation){
         
         this.time = 0;
-        this.distanceToWheels = distanceToWheels;
-        this.sensorDistance = sensorDistance;
+        this.distanceToAxis = distanceToAxis;
         this.sensorSeparation = sensorSeparation;
         setSensors();
         resetParameters();

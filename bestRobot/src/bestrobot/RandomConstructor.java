@@ -18,10 +18,8 @@ public class RandomConstructor {
     private final float MAX_WHEEL_SEPARATION = 40;
     private final float MIN_WHEEL_RADIUS = 0.1f;
     private final float MAX_WHEEL_RADIUS = 2;
-    private final float MIN_DISTANCE_TO_WHEELS = 0;
-    private final float MAX_DISTANCE_TO_WHEELS = 40;
-    private final float MIN_SENSOR_DISTANCE = 1;
-    private final float MAX_SENSOR_DISTANCE = 5;
+    private final float MIN_DISTANCE_TO_AXIS = 0;
+    private final float MAX_DISTANCE_TO_AXIS = 40;
     private final float MIN_SENSOR_SEPARATION = 0;
     private final float MAX_SENSOR_SEPARATION = 44;
     
@@ -33,8 +31,7 @@ public class RandomConstructor {
         List<Float> ret = new ArrayList<>();
         ret.add((float) (Math.random()*(MAX_WHEEL_SEPARATION-MIN_WHEEL_SEPARATION)+MIN_WHEEL_SEPARATION));
         ret.add((float) (Math.random()*(MAX_WHEEL_RADIUS-MIN_WHEEL_RADIUS)+MIN_WHEEL_RADIUS));
-        ret.add((float) (Math.random()*(MAX_DISTANCE_TO_WHEELS-MIN_DISTANCE_TO_WHEELS)+MIN_DISTANCE_TO_WHEELS));
-        ret.add((float) (Math.random()*(MAX_SENSOR_DISTANCE-MIN_SENSOR_DISTANCE)+MIN_SENSOR_DISTANCE));
+        ret.add((float) (Math.random()*(MAX_DISTANCE_TO_AXIS-MIN_DISTANCE_TO_AXIS)+MIN_DISTANCE_TO_AXIS));
         ret.add((float) (Math.random()*(MAX_SENSOR_SEPARATION-MIN_SENSOR_SEPARATION)+MIN_SENSOR_SEPARATION));
         return new Robot(ret);
     

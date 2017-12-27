@@ -28,11 +28,10 @@ public class BestRobot {
         param.add(16f);
         param.add(2f);
         param.add(3f);
-        param.add(0f);
         param.add(4f);
         newRobot = new Robot(param);
         ObjectiveFunction obj = new ObjectiveFunction(2*2*(float)Math.PI, "F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
-        newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3), newRobot.getParameters().get(4)));
+        newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
         //fin de prueba con robot de parametros conocidos
         
         System.out.println(newRobot.getTime());

@@ -45,6 +45,6 @@ public class Robot {
         if(robotIn == null)
             return false;
         
-        return this.parameters.get(0)==robotIn.getParameters().get(0) && this.parameters.get(1)==robotIn.getParameters().get(1) && this.parameters.get(2)==robotIn.getParameters().get(2) && this.parameters.get(3)==robotIn.getParameters().get(3) && this.parameters.get(4)==robotIn.getParameters().get(4);
+        return this.parameters.get(0)==robotIn.getParameters().get(0) && this.parameters.get(1)==robotIn.getParameters().get(1) && this.parameters.get(2)==robotIn.getParameters().get(2) && this.parameters.get(3)==robotIn.getParameters().get(3);
     }
 }
