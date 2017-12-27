@@ -124,6 +124,9 @@ public class ObjectiveFunction {
     }
     
     private void resetParameters(){
+        this.leftWheel = wheelSpeed;
+        this.rightWheel = wheelSpeed;
+        
         this.x = this.circuite.get(0).get(0);
         this.z = this.circuite.get(0).get(2);
         this.rot = 0.0f;

@@ -55,6 +55,83 @@ public class LocalSearch {
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
+        
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=1){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=1){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=2){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=2){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=2){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=2){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=3){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        newNeighbourParameters = new ArrayList<>();
+        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+            if(j!=3){
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }
+        }
+        neighbors.add(new Robot(newNeighbourParameters));
+        
         /*
         for (int i = 0; i < inicialSolution.getParameters().size(); i++) {
             List<Float> newNeighbourParameters = new ArrayList<>();
