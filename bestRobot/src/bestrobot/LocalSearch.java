@@ -23,7 +23,7 @@ public class LocalSearch {
     
     public LocalSearch(Robot solutionIn) throws IOException{
         this.initialSolution = solutionIn;
-        this.objectiveFunction = new ObjectiveFunction(2*2*(float)Math.PI, "F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
+        this.objectiveFunction = new ObjectiveFunction(2*2*(float)Math.PI, BestRobot.circuitePath);
         minParam.add(RandomConstructor.MIN_WHEEL_SEPARATION);
         minParam.add(RandomConstructor.MIN_WHEEL_RADIUS);
         minParam.add(RandomConstructor.MIN_DISTANCE_TO_AXIS);
