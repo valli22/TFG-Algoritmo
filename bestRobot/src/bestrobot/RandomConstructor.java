@@ -14,14 +14,22 @@ import java.util.List;
  * @author David
  */
 public class RandomConstructor {
-    private final float MIN_WHEEL_SEPARATION = 1;
-    private final float MAX_WHEEL_SEPARATION = 40;
-    private final float MIN_WHEEL_RADIUS = 0.1f;
-    private final float MAX_WHEEL_RADIUS = 2;
-    private final float MIN_DISTANCE_TO_AXIS = 0;
-    private final float MAX_DISTANCE_TO_AXIS = 40;
-    private final float MIN_SENSOR_SEPARATION = 0;
-    private final float MAX_SENSOR_SEPARATION = 44;
+    private static float averageWheelSeparation = 16;
+    private static float averageWheelRadius = 2;
+    private static float averageDistanceToAxis = 3;
+    private static float averageSensorSeparation = 4;
+    private static float rangeWheelSeparation = 5;
+    private static float rangeWheelRadius = 1;
+    private static float rangeDistanceToAxis = 3;
+    private static float rangeSensorSeparation = 2;
+    public static final float MIN_WHEEL_SEPARATION = averageWheelSeparation - rangeWheelSeparation;
+    public static final float MAX_WHEEL_SEPARATION = averageWheelSeparation + rangeWheelSeparation;
+    public static final float MIN_WHEEL_RADIUS = averageWheelRadius - rangeWheelRadius;
+    public static final float MAX_WHEEL_RADIUS = averageWheelRadius + rangeWheelRadius;
+    public static final float MIN_DISTANCE_TO_AXIS = averageDistanceToAxis - rangeDistanceToAxis;
+    public static final float MAX_DISTANCE_TO_AXIS = averageDistanceToAxis + rangeDistanceToAxis;
+    public static final float MIN_SENSOR_SEPARATION = averageSensorSeparation - rangeSensorSeparation;
+    public static final float MAX_SENSOR_SEPARATION = averageSensorSeparation + rangeSensorSeparation;
     
     public RandomConstructor(){   
     }

@@ -18,10 +18,21 @@ public class LocalSearch {
     private Robot initialSolution;
     private List<Robot> neighbors;
     private ObjectiveFunction objectiveFunction;
+    private List<Float> minParam = new ArrayList<>();
+    private List<Float> maxParam = new ArrayList<>();
     
     public LocalSearch(Robot solutionIn) throws IOException{
         this.initialSolution = solutionIn;
         this.objectiveFunction = new ObjectiveFunction(2*2*(float)Math.PI, "F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
+        minParam.add(RandomConstructor.MIN_WHEEL_SEPARATION);
+        minParam.add(RandomConstructor.MIN_WHEEL_RADIUS);
+        minParam.add(RandomConstructor.MIN_DISTANCE_TO_AXIS);
+        minParam.add(RandomConstructor.MIN_SENSOR_SEPARATION);
+        
+        maxParam.add(RandomConstructor.MAX_WHEEL_SEPARATION);
+        maxParam.add(RandomConstructor.MAX_WHEEL_RADIUS);
+        maxParam.add(RandomConstructor.MAX_DISTANCE_TO_AXIS);
+        maxParam.add(RandomConstructor.MAX_SENSOR_SEPARATION);
     }
     
     public Robot bestTime(){
@@ -39,95 +50,95 @@ public class LocalSearch {
         neighbors = new ArrayList();
         List<Float> newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=0){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==0 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=0){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==0 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=1){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==1 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=1){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==1 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=2){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=2){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=2){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=2){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=3){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==3 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
         newNeighbourParameters = new ArrayList<>();
         for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j!=3){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }else{
+            if(j==3 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
                 newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
+            }else{
+                newNeighbourParameters.add(initialSolution.getParameters().get(j));
             }
         }
         neighbors.add(new Robot(newNeighbourParameters));
