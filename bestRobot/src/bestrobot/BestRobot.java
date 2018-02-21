@@ -19,6 +19,8 @@ public class BestRobot {
     /**
      * @param args the command line arguments
      */
+    public static int typeOfSearch = 0;
+    
     public static String circuitePath = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\circuito.txt";
     public static String resultsPath = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\Results\\";
     public static void main(String[] args) throws IOException{

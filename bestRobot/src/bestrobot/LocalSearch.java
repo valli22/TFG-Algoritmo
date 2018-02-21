@@ -48,101 +48,114 @@ public class LocalSearch {
     
     private void searchNeighbors(){
         neighbors = new ArrayList();
-        List<Float> newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==0 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
+        switch(BestRobot.typeOfSearch){
+            case 0:
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    SearchParameters(i, 0.1f);
+                }for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    SearchParameters(i, -0.1f);
+                }
+                break;
+                
+            case 1:
+                
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
+                    SearchParameters(i, j, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
+                    SearchParameters(i, j, -0.1f);
+                }
+                SearchParameters(0, 2, 0.1f);
+                SearchParameters(0, 2, -0.1f);
+                
+                SearchParameters(1, 3, 0.1f);
+                SearchParameters(1, 3, -0.1f);
+                
+                break;
+            
+            case 2:
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParameters(i, j, k, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParameters(i, j, k, -0.1f);
+                }
+                break;
+            case 3:
+                SearchParameters(0, 1, 2, 3, 0.1f);
+                
+                SearchParameters(0, 1, 2, 3, -0.1f);
+                break;
+            
+            case 4:
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
+                    SearchParametersAlternate(i, j, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
+                    SearchParametersAlternate(j, i, 0.1f);
+                }
+                SearchParametersAlternate(0, 2, 0.1f);
+                SearchParametersAlternate(2, 0, 0.1f);
+                
+                SearchParametersAlternate(1, 3, 0.1f);
+                SearchParametersAlternate(3, 1, 0.1f);
+                break;
+            case 5:
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(i, j, k, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(i, j, k, -0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(j, i, k, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(j, i, k, -0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(k, j, i, 0.1f);
+                }
+                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+                    SearchParametersAlternate(k, j, i, -0.1f);
+                }
+                break;
+            case 6:
+                SearchParametersAlternate(0, 1, 2, 3, 0.1f);
+                SearchParametersAlternate(0, 1, 2, 3, -0.1f);
+                
+                SearchParametersAlternate(1, 0, 2, 3, 0.1f);
+                SearchParametersAlternate(1, 0, 2, 3, -0.1f);
+                
+                SearchParametersAlternate(2, 1, 0, 3, 0.1f);
+                SearchParametersAlternate(2, 1, 0, 3, -0.1f);
+                
+                SearchParametersAlternate(3, 1, 2, 0, 0.1f);
+                SearchParametersAlternate(3, 1, 2, 0, -0.1f);
+                
+                break;
+            default: System.err.println("Incorrect type of search");
         }
-        neighbors.add(new Robot(newNeighbourParameters));
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==0 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==1 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==1 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==2 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==3 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)+0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        newNeighbourParameters = new ArrayList<>();
-        for (int j = 0; j < initialSolution.getParameters().size(); j++) {
-            if(j==3 && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
-                newNeighbourParameters.add(initialSolution.getParameters().get(j)-0.1f);
-            }else{
-                newNeighbourParameters.add(initialSolution.getParameters().get(j));
-            }
-        }
-        neighbors.add(new Robot(newNeighbourParameters));
-        
         /*
         for (int i = 0; i < inicialSolution.getParameters().size(); i++) {
             List<Float> newNeighbourParameters = new ArrayList<>();
@@ -198,7 +211,90 @@ public class LocalSearch {
         */
     
     }
+    private void SearchParameters(int parameter, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if(j==parameter && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
+    private void SearchParameters(int parameter1,int parameter2, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if((parameter1==j || parameter2 == j) && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
+    private void SearchParameters(int parameter1,int parameter2,int parameter3, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if((parameter1==j || parameter2 == j || parameter3 ==j) && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
+    private void SearchParameters(int parameter1,int parameter2,int parameter3,int parameter4, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if((parameter1==j || parameter2 == j || parameter3 ==j || parameter4 == j) && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
     
+    private void SearchParametersAlternate(int parameter1,int parameter2, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if(parameter1==j && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else if(parameter2 == j && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)-addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
+    private void SearchParametersAlternate(int parameter1,int parameter2,int parameter3, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if(parameter1==j && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)-addicion);
+                    }else if((parameter2 == j ||parameter3 == j) && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else {
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
+    private void SearchParametersAlternate(int parameter1,int parameter2,int parameter3,int parameter4, float addicion){
+                List<Float> newNeighbourParameters = new ArrayList<>();
+                for (int j = 0; j < initialSolution.getParameters().size(); j++) {
+                    if(parameter1==j && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)-addicion);
+                    }else if(( parameter2 == j || parameter3 ==j || parameter4 == j) && initialSolution.getParameters().get(j)<maxParam.get(j) && initialSolution.getParameters().get(j)>minParam.get(j)){
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j)+addicion);
+                    }else{
+                        newNeighbourParameters.add(initialSolution.getParameters().get(j));
+                    }
+                }
+                neighbors.add(new Robot(newNeighbourParameters));
+    }
     private int neighborsTime(){
         int best = 0;
         for (int i = 0; i < neighbors.size(); i++) {
