@@ -20,7 +20,7 @@ public class IOFile {
     
     public IOFile(String name) throws IOException{
         nameFile = name;
-        path = BestRobot.resultsPath+nameFile+String.valueOf(BestRobot.typeOfSearch)+".txt";
+        path = BestRobot.resultsPath+nameFile+".txt";
         file = new File(path);
         try{
             bw = new BufferedWriter(new FileWriter(file));

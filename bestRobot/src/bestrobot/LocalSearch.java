@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class LocalSearch {
     
+    public float valueChange = 0.1f;
+    
     private Robot initialSolution;
     private List<Robot> neighbors;
     private ObjectiveFunction objectiveFunction;
@@ -22,8 +24,9 @@ public class LocalSearch {
     private List<Float> maxParam = new ArrayList<>();
     
     public LocalSearch(Robot solutionIn) throws IOException{
+        valueChange = BestRobot.neighbordChangeVal;
         this.initialSolution = solutionIn;
-        this.objectiveFunction = new ObjectiveFunction(2*2*(float)Math.PI, BestRobot.circuitePath);
+        this.objectiveFunction = new ObjectiveFunction(BestRobot.robotSpeed*2*(float)Math.PI, BestRobot.circuitePath);
         minParam.add(RandomConstructor.MIN_WHEEL_SEPARATION);
         minParam.add(RandomConstructor.MIN_WHEEL_RADIUS);
         minParam.add(RandomConstructor.MIN_DISTANCE_TO_AXIS);
@@ -38,7 +41,12 @@ public class LocalSearch {
     public Robot bestTime(){
     
         searchNeighbors();
-        int best = neighborsTime();
+        int best;
+        if(BestRobot.typeOfAlgorithm==0){
+            best = neighborsTimeBest();
+        }else{
+            best = neighborsTimeFirst();
+        }
         if(best == -1)
             return this.initialSolution;
         else
@@ -48,113 +56,35 @@ public class LocalSearch {
     
     private void searchNeighbors(){
         neighbors = new ArrayList();
-        switch(BestRobot.typeOfSearch){
-            case 0:
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    SearchParameters(i, 0.1f);
-                }for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    SearchParameters(i, -0.1f);
-                }
-                break;
-                
-            case 1:
-                
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
-                    SearchParameters(i, j, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
-                    SearchParameters(i, j, -0.1f);
-                }
-                SearchParameters(0, 2, 0.1f);
-                SearchParameters(0, 2, -0.1f);
-                
-                SearchParameters(1, 3, 0.1f);
-                SearchParameters(1, 3, -0.1f);
-                
-                break;
-            
-            case 2:
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParameters(i, j, k, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParameters(i, j, k, -0.1f);
-                }
-                break;
-            case 3:
-                SearchParameters(0, 1, 2, 3, 0.1f);
-                
-                SearchParameters(0, 1, 2, 3, -0.1f);
-                break;
-            
-            case 4:
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
-                    SearchParametersAlternate(i, j, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1; 
-                    SearchParametersAlternate(j, i, 0.1f);
-                }
-                SearchParametersAlternate(0, 2, 0.1f);
-                SearchParametersAlternate(2, 0, 0.1f);
-                
-                SearchParametersAlternate(1, 3, 0.1f);
-                SearchParametersAlternate(3, 1, 0.1f);
-                break;
-            case 5:
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(i, j, k, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(i, j, k, -0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(j, i, k, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(j, i, k, -0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(k, j, i, 0.1f);
-                }
-                for (int i = 0; i < initialSolution.getParameters().size(); i++) {
-                    int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
-                    int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
-                    SearchParametersAlternate(k, j, i, -0.1f);
-                }
-                break;
-            case 6:
-                SearchParametersAlternate(0, 1, 2, 3, 0.1f);
-                SearchParametersAlternate(0, 1, 2, 3, -0.1f);
-                
-                SearchParametersAlternate(1, 0, 2, 3, 0.1f);
-                SearchParametersAlternate(1, 0, 2, 3, -0.1f);
-                
-                SearchParametersAlternate(2, 1, 0, 3, 0.1f);
-                SearchParametersAlternate(2, 1, 0, 3, -0.1f);
-                
-                SearchParametersAlternate(3, 1, 2, 0, 0.1f);
-                SearchParametersAlternate(3, 1, 2, 0, -0.1f);
-                
-                break;
-            default: System.err.println("Incorrect type of search");
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(i, j, k, valueChange);
+        }
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(i, j, k, -valueChange);
+        }
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(j, i, k, valueChange);
+        }
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(j, i, k, -valueChange);
+        }
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(k, j, i, valueChange);
+        }
+        for (int i = 0; i < initialSolution.getParameters().size(); i++) {
+            int j =(i==initialSolution.getParameters().size()-1)? 0:i+1;
+            int k =(j==initialSolution.getParameters().size()-1)? 0:j+1;;
+            SearchParametersAlternate(k, j, i, -valueChange);
         }
         /*
         for (int i = 0; i < inicialSolution.getParameters().size(); i++) {
@@ -295,13 +225,27 @@ public class LocalSearch {
                 }
                 neighbors.add(new Robot(newNeighbourParameters));
     }
-    private int neighborsTime(){
+    private int neighborsTimeBest(){
         int best = 0;
         for (int i = 0; i < neighbors.size(); i++) {
             float time = objectiveFunction.race(this.neighbors.get(i).getParameters().get(0), this.neighbors.get(i).getParameters().get(1), this.neighbors.get(i).getParameters().get(2), this.neighbors.get(i).getParameters().get(3));
             this.neighbors.get(i).setTime(time);
             if(this.neighbors.get(best).getTime()>this.neighbors.get(i).getTime())
                 best = i;
+        }
+        if(this.initialSolution.getTime()<this.neighbors.get(best).getTime())
+            best = -1;
+        
+        return best;
+    }
+    private int neighborsTimeFirst(){
+        int best = 0;
+        for (int i = 0; i < neighbors.size(); i++) {
+            float time = objectiveFunction.race(this.neighbors.get(i).getParameters().get(0), this.neighbors.get(i).getParameters().get(1), this.neighbors.get(i).getParameters().get(2), this.neighbors.get(i).getParameters().get(3));
+            this.neighbors.get(i).setTime(time);
+            if(this.initialSolution.getTime()>this.neighbors.get(i).getTime())
+                best = i;
+                break;
         }
         if(this.initialSolution.getTime()<this.neighbors.get(best).getTime())
             best = -1;

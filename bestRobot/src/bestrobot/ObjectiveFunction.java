@@ -27,8 +27,8 @@ public class ObjectiveFunction {
     private float leftWheel, rightWheel;
     //private final float THRESHOLD = 0.15f;
     private final float THRESHOLD = 0.3f;
-    //private final float DT = 0.007f;
-    private final float DT = 0.01f;
+    //private final float DT = 0.01f;
+    private final float DT = 0.005f;
     private final float THRESHOLD_STOP_CONDITION = 2f;
     private float[] leftSensorVector = new float[4];
     private float[] rightSensorVector = new float[4];
@@ -93,7 +93,7 @@ public class ObjectiveFunction {
         setSensors();
         resetParameters();
         
-        while(Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(circuite.size()-1).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-1).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
+        while(Math.sqrt(Math.pow(circuite.get(circuite.size()-5).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-5).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(circuite.size()-5).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(circuite.size()-5).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
         //while(Math.sqrt(Math.pow(circuite.get(50).get(0)-this.leftSensorPosition[0], 2)+Math.pow(circuite.get(50).get(2)-this.leftSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION && Math.sqrt(Math.pow(circuite.get(50).get(0)-this.rightSensorPosition[0], 2)+Math.pow(circuite.get(50).get(2)-this.rightSensorPosition[2], 2)) > THRESHOLD_STOP_CONDITION){
             movementController();
             x -= (rightWheel + leftWheel) * (wheelRadius * Math.sin(rot)/2) * DT;
