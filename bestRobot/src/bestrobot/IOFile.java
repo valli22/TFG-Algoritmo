@@ -18,9 +18,12 @@ public class IOFile {
     File file;
     BufferedWriter bw;
     
-    public IOFile(String name) throws IOException{
+    public IOFile(String name, int i) throws IOException{
         nameFile = name;
-        path = BestRobot.resultsPath+nameFile+".txt";
+        if(i==0)
+            path = BestRobot.resultsPath+nameFile+".txt";
+        else
+            path = BestRobot.resultsPathOptimo+nameFile+".txt";
         file = new File(path);
         try{
             bw = new BufferedWriter(new FileWriter(file));

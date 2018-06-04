@@ -66,6 +66,7 @@ public class BestRobot {
     private static String[] pathArray = {"F:\\TFG - Algoritmo\\TFG-Algoritmo\\circuito.txt","F:\\TFG - Algoritmo\\TFG-Algoritmo\\circuito2Grande.txt","F:\\TFG - Algoritmo\\TFG-Algoritmo\\circuitoDerechaGrande.txt"};
     public static String circuitePath;
     public static String resultsPath = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\Results\\";
+    public static String resultsPathOptimo = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\ResultsOptimo\\";
     
     public static void main(String[] args) throws IOException{
         
@@ -78,13 +79,13 @@ public class BestRobot {
                         circuitePath = pathArray[i];
                         for (int j = 0; j < speedArray.length; j++) {
                             robotSpeed = speedArray[j];
-                            prefixName = "Busq "+String.valueOf(typeOfAlgorithm*neighbordChangeArray.length+m+1)+"-Inst "+String.valueOf(i*speedArray.length+j+1)+"-it"+String.valueOf(k);
+                            prefixName = "Busq "+String.valueOf(typeOfAlgorithm*neighbordChangeArray.length+m+1)+"-Inst "+String.valueOf(i*speedArray.length+j+1)+"-it "+String.valueOf(k)+" ";
 
                             // ejecucion del programa
                             float startTime = System.nanoTime();
                             Robot newRobot = new InitializeRobot().firstRobot();
                             Robot bestRobotATM = null;
-                            IOFile costeTiempoFile = new IOFile(prefixName+"Tiempo Coste");
+                            IOFile costeTiempoFile = new IOFile(prefixName+"Tiempo Coste",0);
                             //prueba con robot de parametros conocidos
                             /*
                             List<Float> param = new ArrayList<>();
@@ -98,14 +99,14 @@ public class BestRobot {
                             */
                             //fin de prueba con robot de parametros conocidos
                             costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
-                            System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                            //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                             int round = 0;
                             int stuned = 0;
                             while(!newRobot.equals(bestRobotATM) && stuned < 11){
                                 bestRobotATM = newRobot;
                                 LocalSearch lc = new LocalSearch(bestRobotATM);
                                 newRobot = lc.bestTime();
-                                System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                                //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                                 costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                                 if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
                                     stuned++;
@@ -115,13 +116,14 @@ public class BestRobot {
                                 round++;
                             }
                             costeTiempoFile.CloseFile();
-                            IOFile finalParametersFile = new IOFile(prefixName+"Parametros Finales");
+                            IOFile finalParametersFile = new IOFile(prefixName+"Parametros Finales",1);
                             finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(0)));
                             finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(1)));
                             finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(2)));
                             finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(3)));
                             finalParametersFile.CloseFile();
-
+                            
+                            System.out.println(prefixName);
                         }
                     }
                 }
