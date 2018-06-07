@@ -69,7 +69,7 @@ public class BestRobot {
     public static String resultsPathOptimo = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\ResultsOptimo\\";
     
     public static void main(String[] args) throws IOException{
-        
+        /*
         for (int k = 0; k < numEjecuciones; k++) {
             for (int l = 0; l < 2; l++) {
                 typeOfAlgorithm = l;
@@ -98,6 +98,7 @@ public class BestRobot {
                             newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
                             */
                             //fin de prueba con robot de parametros conocidos
+                            /*
                             costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                             //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                             int round = 0;
@@ -129,6 +130,61 @@ public class BestRobot {
                 }
             }        
         }
+        */
+        
+        
+        
+        typeOfAlgorithm = 1;
+        neighbordChangeVal= neighbordChangeArray[1];
+        circuitePath = pathArray[2];
+        robotSpeed = speedArray[0];
+        prefixName = "Especial first";
+        // ejecucion del programa
+        float startTime = System.nanoTime();
+        //Robot newRobot = new InitializeRobot().firstRobot();
+        Robot bestRobotATM = null;
+        IOFile costeTiempoFile = new IOFile(prefixName+"Tiempo Coste",0);
+        //prueba con robot de parametros conocidos
+        
+        List<Float> param = new ArrayList<>();
+        param.add(16f);
+        param.add(2f);
+        param.add(3f);
+        param.add(4f);
+        Robot newRobot = new Robot(param);
+        ObjectiveFunction obj = new ObjectiveFunction(robotSpeed*2*(float)Math.PI, "F:\\TFG\\Git\\TFG-RobotSiguelineas\\Circuitos\\circuito.txt");
+        newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
+        
+        //fin de prueba con robot de parametros conocidos
+        costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+        //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+        int round = 0;
+        int stuned = 0;
+        while(!newRobot.equals(bestRobotATM) && stuned < 11){
+            bestRobotATM = newRobot;
+            LocalSearch lc = new LocalSearch(bestRobotATM);
+            newRobot = lc.bestTime();
+            //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+            costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+            if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
+                stuned++;
+            }else{
+                stuned = 0;
+            }
+            round++;
+        }
+        costeTiempoFile.CloseFile();
+        IOFile finalParametersFile = new IOFile(prefixName+"Parametros Finales",1);
+        finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(0)));
+        finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(1)));
+        finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(2)));
+        finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(3)));
+        finalParametersFile.CloseFile();
+
+        System.out.println(prefixName);
+        
+        
+        
     }
         
         
