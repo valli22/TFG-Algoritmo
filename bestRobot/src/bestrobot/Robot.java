@@ -37,6 +37,30 @@ public class Robot {
         return this.parameters;
     }
     
+    public void permute(){
+        float permutation;
+        
+        do{
+         permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
+        }while(this.parameters.get(0)+permutation<=RandomConstructor.MIN_WHEEL_SEPARATION);
+        this.parameters.set(0, this.parameters.get(0)+permutation);
+        
+        do{
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
+        }while(this.parameters.get(1)+permutation<=RandomConstructor.MIN_WHEEL_RADIUS);
+        this.parameters.set(1, this.parameters.get(1)+permutation);
+        
+        do{
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
+        }while(this.parameters.get(2)+permutation<=RandomConstructor.MIN_DISTANCE_TO_AXIS);
+        this.parameters.set(2, this.parameters.get(2)+permutation);
+        
+        do{
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
+        }while(this.parameters.get(3)+permutation<=RandomConstructor.MIN_SENSOR_SEPARATION);
+        this.parameters.set(3, this.parameters.get(3)+permutation);
+    }
+    
     @Override
     public boolean equals(Object o){
         
