@@ -69,7 +69,7 @@ public class BestRobot {
     public static String resultsPathOptimo = "F:\\TFG - Algoritmo\\TFG-Algoritmo\\ResultsOptimo\\";
     
     public static void main(String[] args) throws IOException{
-        /*
+        
         for (int k = 0; k < numEjecuciones; k++) {
             for (int l = 0; l < 2; l++) {
                 typeOfAlgorithm = l;
@@ -120,15 +120,14 @@ public class BestRobot {
                 }
             }        
         }
-        */
         
         
         /*
-        typeOfAlgorithm = 1;
+        typeOfAlgorithm = 0;
         neighbordChangeVal= neighbordChangeArray[1];
         circuitePath = pathArray[2];
         robotSpeed = speedArray[0];
-        prefixName = "Especial first";
+        prefixName = "Especial2 best";
         // ejecucion del programa
         float startTime = System.nanoTime();
         //Robot newRobot = new InitializeRobot().firstRobot();
@@ -137,11 +136,13 @@ public class BestRobot {
         //prueba con robot de parametros conocidos
         
         List<Float> param = new ArrayList<>();
-        param.add(16f);
-        param.add(2f);
-        param.add(3f);
-        param.add(4f);
+        param.add(13.08f);
+        param.add(1.36f);
+        param.add(5.20f);
+        param.add(4.13f);
         Robot newRobot = new Robot(param);
+        //Robot newRobot = new InitializeRobot().firstRobot();
+        //System.out.println(String.valueOf(newRobot.getParameters().get(0))+"--"+String.valueOf(newRobot.getParameters().get(1))+"--"+String.valueOf(newRobot.getParameters().get(2))+"--"+String.valueOf(newRobot.getParameters().get(3)));
         ObjectiveFunction obj = new ObjectiveFunction(robotSpeed*2*(float)Math.PI, circuitePath);
         newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
         
@@ -174,7 +175,7 @@ public class BestRobot {
         System.out.println(prefixName);
         */
         
-        
+        /*
         //ILS
         typeOfAlgorithm = 0;
         neighbordChangeVal= neighbordChangeArray[1];
@@ -251,7 +252,7 @@ public class BestRobot {
         finalParametersFile.CloseFile();
 
         System.out.println(prefixName);
-        
+        */
     }
         
         
