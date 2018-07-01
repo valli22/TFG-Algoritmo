@@ -243,9 +243,10 @@ public class LocalSearch {
         for (int i = 0; i < neighbors.size(); i++) {
             float time = objectiveFunction.race(this.neighbors.get(i).getParameters().get(0), this.neighbors.get(i).getParameters().get(1), this.neighbors.get(i).getParameters().get(2), this.neighbors.get(i).getParameters().get(3));
             this.neighbors.get(i).setTime(time);
-            if(this.initialSolution.getTime()>this.neighbors.get(i).getTime())
+            if(this.initialSolution.getTime()>this.neighbors.get(i).getTime()){
                 best = i;
                 break;
+            }
         }
         if(this.initialSolution.getTime()<this.neighbors.get(best).getTime())
             best = -1;
