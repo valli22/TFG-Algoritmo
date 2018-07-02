@@ -41,23 +41,23 @@ public class Robot {
         float permutation;
         
         do{
-         permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
-        }while(this.parameters.get(0)+permutation<=RandomConstructor.MIN_WHEEL_SEPARATION);
+         permutation = (float) Math.random()*(BestRobot.neighbordChangeVal*2-(-BestRobot.neighbordChangeVal*2))+(-BestRobot.neighbordChangeVal*2);
+        }while(this.parameters.get(0)+permutation<=RandomConstructor.MIN_WHEEL_SEPARATION || this.parameters.get(0)+permutation>=RandomConstructor.MAX_WHEEL_SEPARATION);
         this.parameters.set(0, this.parameters.get(0)+permutation);
         
         do{
-        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
-        }while(this.parameters.get(1)+permutation<=RandomConstructor.MIN_WHEEL_RADIUS);
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal*2-(-BestRobot.neighbordChangeVal*2))+(-BestRobot.neighbordChangeVal*2);
+        }while(this.parameters.get(1)+permutation<=RandomConstructor.MIN_WHEEL_RADIUS || this.parameters.get(1)+permutation>=RandomConstructor.MAX_WHEEL_RADIUS);
         this.parameters.set(1, this.parameters.get(1)+permutation);
         
         do{
-        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
-        }while(this.parameters.get(2)+permutation<=RandomConstructor.MIN_DISTANCE_TO_AXIS);
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal*2-(-BestRobot.neighbordChangeVal*2))+(-BestRobot.neighbordChangeVal*2);
+        }while(this.parameters.get(2)+permutation<=RandomConstructor.MIN_DISTANCE_TO_AXIS || this.parameters.get(2)+permutation>=RandomConstructor.MAX_DISTANCE_TO_AXIS);
         this.parameters.set(2, this.parameters.get(2)+permutation);
         
         do{
-        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal-(-BestRobot.neighbordChangeVal))+(-BestRobot.neighbordChangeVal);
-        }while(this.parameters.get(3)+permutation<=RandomConstructor.MIN_SENSOR_SEPARATION);
+        permutation = (float) Math.random()*(BestRobot.neighbordChangeVal*2-(-BestRobot.neighbordChangeVal*2))+(-BestRobot.neighbordChangeVal*2);
+        }while(this.parameters.get(3)+permutation<=RandomConstructor.MIN_SENSOR_SEPARATION || this.parameters.get(3)+permutation>=RandomConstructor.MAX_SENSOR_SEPARATION);
         this.parameters.set(3, this.parameters.get(3)+permutation);
     }
     

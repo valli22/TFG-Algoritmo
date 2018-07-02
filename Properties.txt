@@ -1,0 +1,20 @@
+#Parametros algoritmo
+tipoAlgoritmo = 0 	# 0 varias ejecuciones, 1 una ejecucion, 2 1 ejecucion con ILS
+BestFirst = 0 		# 0 best, 1 first
+Ax1 = 0.05 		# Valor 1 de modificacion del vecindario, en caso de realizar una ejecucion este seria el valor de modificacion del vecindario
+Ax2 = 0.1		# Valor 2 de modificacion del vecindario
+Ax3 = 0.15		# Valor 3 de modificacion del vencidario
+Ax4 = 0.2		# Valor 4 de modificacion del vecindario
+numEjecuciones = 10 	# Numero de ejecuciones
+
+#IO
+pathSalidaTiempoCoste = F:\TFG - Algoritmo\TFG-Algoritmo\Results\ 		#Carpeta donde se guarda el tiempo de ejecucion y los costes de los robots
+pathSalidaParamFinales = F:\TFG - Algoritmo\TFG-Algoritmo\ResultsOptimo\ 	#Carpeta donde se guardan los parametros del robot optimo
+
+#Instancia
+vel1 = 2		#Velocidad del robot, en caso de realizar una ejecucion esta sera la velocidad
+vel2 = 2.5		#Velocidad 2
+vel3 = 3		#Velocidad 3
+pathCircuito1 = F:\TFG - Algoritmo\TFG-Algoritmo\circuito.txt			#Path del circuito a recorrer, en caso de realizar una ejecucion este sera el circuito
+pathCircuito2 = F:\TFG - Algoritmo\TFG-Algoritmo\circuito2Grande.txt		#Path del circuito 2 a recorrer
+pathCircuito3 = F:\TFG - Algoritmo\TFG-Algoritmo\circuitoDerechaGrande.txt	#Path del circuito 3 a reccorrer

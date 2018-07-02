@@ -20,7 +20,7 @@ public class BestRobot {
     /**
      * @param args the command line arguments
      */
-    public static int typeOfExecution = 0;
+    public static int typeOfExecution = 1;
     /*
     0 = 10 ejecuciones de cada combinacion
     1 = ejecucion de un robot especifico en un tipo de ejecucion especifica (se especifica en el codigo)
@@ -97,14 +97,14 @@ public class BestRobot {
                                 //fin de prueba con robot de parametros conocidos
 
                                 costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
-                                //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                                System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                                 int round = 0;
                                 int stuned = 0;
                                 while(!newRobot.equals(bestRobotATM) && stuned < 11){
                                     bestRobotATM = newRobot;
                                     LocalSearch lc = new LocalSearch(bestRobotATM);
                                     newRobot = lc.bestTime();
-                                    //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                                    System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                                     costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                                     if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
                                         stuned++;
@@ -130,10 +130,10 @@ public class BestRobot {
         }else if(typeOfExecution == 1){
         
             typeOfAlgorithm = 0;
-            neighbordChangeVal= neighbordChangeArray[1];
+            neighbordChangeVal= neighbordChangeArray[0];
             circuitePath = pathArray[2];
-            robotSpeed = speedArray[0];
-            prefixName = "Especial2 best";
+            robotSpeed = speedArray[2];
+            prefixName = "Especial Humano instancia 1";
             // ejecucion del programa
             float startTime = System.nanoTime();
             //Robot newRobot = new InitializeRobot().firstRobot();
@@ -142,10 +142,10 @@ public class BestRobot {
             //prueba con robot de parametros conocidos
 
             List<Float> param = new ArrayList<>();
-            param.add(13.08f);
-            param.add(1.36f);
-            param.add(5.20f);
-            param.add(4.13f);
+            param.add(13f);
+            param.add(2f);
+            param.add(5f);
+            param.add(4f);
             Robot newRobot = new Robot(param);
             //Robot newRobot = new InitializeRobot().firstRobot();
             //System.out.println(String.valueOf(newRobot.getParameters().get(0))+"--"+String.valueOf(newRobot.getParameters().get(1))+"--"+String.valueOf(newRobot.getParameters().get(2))+"--"+String.valueOf(newRobot.getParameters().get(3)));
@@ -154,14 +154,15 @@ public class BestRobot {
 
             //fin de prueba con robot de parametros conocidos
             costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
-            //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+            //System.out.println(String.valueOf(newRobot.getTime()));
+            System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
             int round = 0;
             int stuned = 0;
             while(!newRobot.equals(bestRobotATM) && stuned < 11){
                 bestRobotATM = newRobot;
                 LocalSearch lc = new LocalSearch(bestRobotATM);
                 newRobot = lc.bestTime();
-                //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                 costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                 if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
                     stuned++;
@@ -183,7 +184,7 @@ public class BestRobot {
         }else if(typeOfExecution == 2){
             
             typeOfAlgorithm = 0;
-            neighbordChangeVal= neighbordChangeArray[1];
+            neighbordChangeVal= neighbordChangeArray[3];
             circuitePath = pathArray[0];
             robotSpeed = speedArray[0];
             prefixName = "Especial best ILS ";
@@ -205,14 +206,14 @@ public class BestRobot {
 
             //fin de prueba con robot de parametros conocidos
             costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
-            //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+            System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
             int round = 0;
             int stuned = 0;
             while(!newRobot.equals(bestRobotATM) && stuned < 11){
                 bestRobotATM = newRobot;
                 LocalSearch lc = new LocalSearch(bestRobotATM);
                 newRobot = lc.bestTime();
-                //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                 costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
                 if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
                     stuned++;
@@ -221,33 +222,35 @@ public class BestRobot {
                 }
                 round++;
             }
-            //Se permuta la solucion actual
-            Robot bestWorldRobot = newRobot;
-            newRobot.permute();
-            obj = new ObjectiveFunction(robotSpeed*2*(float)Math.PI, circuitePath);
-            newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
-            costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+            for (int i = 0; i < 20; i++) {
 
-            bestRobotATM = null;
-            round = 0;
-            stuned = 0;
-            while(!newRobot.equals(bestRobotATM) && stuned < 11){
-                bestRobotATM = newRobot;
-                LocalSearch lc = new LocalSearch(bestRobotATM);
-                newRobot = lc.bestTime();
-                //System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                //Se permuta la solucion actual
+                Robot bestWorldRobot = newRobot;
+                newRobot.permute();
+                obj = new ObjectiveFunction(robotSpeed*2*(float)Math.PI, circuitePath);
+                newRobot.setTime(obj.race(newRobot.getParameters().get(0), newRobot.getParameters().get(1), newRobot.getParameters().get(2), newRobot.getParameters().get(3)));
                 costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
-                if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
-                    stuned++;
-                }else{
-                    stuned = 0;
+
+                bestRobotATM = null;
+                round = 0;
+                stuned = 0;
+                while(!newRobot.equals(bestRobotATM) && stuned < 11){
+                    bestRobotATM = newRobot;
+                    LocalSearch lc = new LocalSearch(bestRobotATM);
+                    newRobot = lc.bestTime();
+                    System.out.println(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                    costeTiempoFile.WriteLine(String.valueOf((System.nanoTime()-startTime)/1000000000)+" "+String.valueOf(newRobot.getTime()));
+                    if(new DecimalFormat("#.###").format(newRobot.getTime()).equals(new DecimalFormat("#.###").format(bestRobotATM.getTime()))){
+                        stuned++;
+                    }else{
+                        stuned = 0;
+                    }
+                    round++;
                 }
-                round++;
+
+                if(bestWorldRobot.getTime()<newRobot.getTime())
+                    newRobot = bestWorldRobot;
             }
-
-            if(bestWorldRobot.getTime()<newRobot.getTime())
-                newRobot = bestWorldRobot;
-
             costeTiempoFile.CloseFile();
             IOFile finalParametersFile = new IOFile(prefixName+"Parametros Finales",1);
             finalParametersFile.WriteLine(String.valueOf(newRobot.getParameters().get(0)));
